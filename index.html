@@ -1,80 +1,343 @@
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your $750 Walmart Gift Card</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #eef2f7;
-      margin: 0;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .cta-button {
-      background-color: #0071dc;
-      color: white;
-      font-size: 18px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .cta-button:hover {
-      background-color: #005aae;
-    }
-    .muted-text {
-      color: #5a677b;
-      font-size: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your $750 Walmart Gift Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Basic body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2f7; /* Fallback background */
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        /* Walmart brand color utilities */
+        .walmart-blue { color: #0071dc; }
+        .walmart-yellow { color: #ffc120; }
+
+        /* CTA button styling */
+        .cta-button {
+            background-color: #0071dc;
+            color: #ffffff;
+            transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+            box-shadow: 0 3px 6px rgba(0, 113, 220, 0.25);
+            font-size: 1.125rem; /* text-lg (18px) */
+            padding-top: 0.875rem; /* py-3.5 */
+            padding-bottom: 0.875rem; /* py-3.5 */
+        }
+        .cta-button:hover {
+            background-color: #005aae;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 90, 174, 0.3);
+        }
+        .cta-button:active {
+            background-color: #004c91;
+            transform: translateY(0px);
+            box-shadow: 0 2px 4px rgba(0, 113, 220, 0.2);
+        }
+
+        /* Main page container - content-based height */
+        .page-container {
+            background-color: #ffffff;
+            width: 100%;
+            display: flex; /* Enable flexbox */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+            justify-content: flex-start; /* Align children to the top */
+            padding: 0 1rem; /* No top/bottom padding, just horizontal */
+            box-sizing: border-box;
+        }
+
+        /* Inner wrapper to constrain content width */
+        .content-wrapper {
+            width: 100%;
+            max-width: 24rem; /* max-w-sm */
+            text-align: center;
+        }
+
+        /* Text styling */
+        .main-title-text { /* For H1 */
+            color: #1a202c;
+            font-size: 1.5rem; /* text-2xl (24px) */
+            line-height: 2rem; /* leading-8 */
+        }
+        .section-title-text { /* For H2 */
+            color: #1a202c;
+            font-size: 1.25rem; /* text-xl (20px) */
+            line-height: 1.75rem; /* leading-7 */
+        }
+        .muted-text { /* Header subtitle */
+            color: #5a677b;
+            font-size: 1rem; /* text-base (16px) */
+        }
+
+        /* Fade-in animation for the page container */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity:0; }
+        .delay-2 { animation-delay: 0.2s; opacity:0; }
+        .delay-3 { animation-delay: 0.3s; opacity:0; }
+        .delay-4 { animation-delay: 0.4s; opacity:0; }
+
+        /* Custom Gift Card Styling */
+        .gift-card-display {
+            background: linear-gradient(135deg, #0071dc 0%, #0058a3 70%, #004c91 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 16px;
+            width: 100%;
+            max-width: 280px;
+            margin: 16px auto;
+            box-shadow: 0 6px 12px rgba(0, 76, 145, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .gift-card-display .spark-logo {
+            width: 30px; height: auto; margin-bottom: 4px; opacity: 0.95;
+        }
+        .gift-card-display .card-value {
+            font-size: 2.25rem; font-weight: 800; color: #ffc120; line-height: 1; margin-bottom: 0px; text-shadow: 0px 1px 2px rgba(0,0,0,0.25);
+        }
+        .gift-card-display .card-label {
+            font-size: 0.75rem; font-weight: 500; opacity: 0.85; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .gift-card-display .simulated-barcode {
+            width: 50%; height: 20px; background: repeating-linear-gradient(to right, #fff, #fff 1.5px, #ffffff80 1.5px, #ffffff80 3px); margin: 10px auto 4px auto; border-radius: 2px; opacity: 0.6;
+        }
+        .gift-card-display::before {
+            content: ''; position: absolute; top: -30%; left: -60%; width: 120%; height: 150%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 55%);
+            transform: rotate(20deg); transition: transform 0.6s ease;
+        }
+        .gift-card-display:hover::before { transform: rotate(30deg) scale(1.15); }
+
+        /* Steps styling - adjusted */
+        .step-icon {
+            background-color: #0071dc;
+            color: white;
+            flex-shrink: 0;
+            width: 1.75rem; /* h-7, w-7 */
+            height: 1.75rem; /* h-7, w-7 */
+            font-size: 0.875rem; /* text-sm */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+            margin-right: 0.75rem; /* mr-3 */
+        }
+        .step-text { /* For the paragraph containing step title and description */
+            font-size: 1rem; /* text-base (16px) */
+            line-height: 1.5; /* leading-relaxed */
+            color: #4a5568;
+        }
+        .step-title-text { /* For the <strong> part of the step text */
+             font-weight: 700; /* Bold */
+             color: #2d3748;
+        }
+
+        /* Footer text styling */
+        .footer-text {
+            font-size: 0.9375rem; /* 15px */
+            color: #718096; /* Tailwind's gray-500 */
+        }
+
+    </style>
 </head>
 <body>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Walmart_Spark.svg/100px-Walmart_Spark.svg.png" alt="Walmart Logo" style="height: 40px;" />
-  <h1 style="margin-top: 16px;">Get Your <span style="color:#0071dc;">$750 Walmart Card</span></h1>
-  <p class="muted-text">Quick survey & offer completion for a chance to win!</p>
-  <button id="ctaButton" class="cta-button" style="margin-top: 24px;">Get Started Now</button>
-  <p id="ctaMessage" style="display:none; margin-top: 12px; color: green;">
-    <i class="fas fa-spinner fa-spin"></i> Checking eligibility...
-  </p>
-  <script>
-    window.onload = function () {
-      const ctaBtn = document.getElementById('ctaButton');
-      const ctaMsg = document.getElementById('ctaMessage');
 
-      const baseOfferUrl = 'https://glstrck.com/aff_c';
-      const offerId = '564';
-      const affiliateId = '1359';
-      let dynamicSource = '123';
+    <div class="page-container animate-fadeIn">
+        <div class="content-wrapper">
+            <header class="mb-1 pt-2 text-center animate-fadeIn delay-1">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Walmart_Spark.svg/100px-Walmart_Spark.svg.png" alt="Walmart Logo" class="h-10 mx-auto mb-1" onerror="this.style.display='none'"/>
+                <h1 class="font-bold main-title-text leading-tight">
+                    Get Your <span class="walmart-blue">$750 Walmart Card</span>
+                </h1>
+                <p class="mt-1 muted-text">
+                    Quick survey & offer completion for a chance to win!
+                </p>
+            </header>
 
-      try {
-        const referrer = document.referrer;
-        if (referrer) {
-          const refUrl = new URL(referrer);
-          const parts = refUrl.pathname.split('/').filter(Boolean);
-          if (parts.length > 0) {
-            dynamicSource = parts[parts.length - 1].substring(0, 4);
-          }
+            <div class="my-3 animate-fadeIn delay-2">
+                <div class="gift-card-display mx-auto">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Walmart_Spark.svg/100px-Walmart_Spark.svg.png" alt="Walmart Spark" class="spark-logo" onerror="this.style.display='none'"/>
+                    <div class="card-value">$750</div>
+                    <div class="card-label">Gift Card</div>
+                    <div class="simulated-barcode"></div>
+                </div>
+            </div>
+
+            <section class="mb-4 animate-fadeIn delay-3">
+                <h2 class="font-semibold section-title-text mb-3 text-center">
+                    How It Works:
+                </h2>
+                <ul class="space-y-3">
+                    <li class="flex items-center">
+                        <span class="step-icon">1</span>
+                        <p class="step-text"><strong class="step-title-text">Start Survey:</strong> Click below to begin.</p>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="step-icon">2</span>
+                        <p class="step-text"><strong class="step-title-text">Answer Qs:</strong> Quick eligibility check.</p>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="step-icon">3</span>
+                        <p class="step-text"><strong class="step-title-text">Complete Offers:</strong> Finish 3+ sponsor offers.</p>
+                    </li>
+                     <li class="flex items-center">
+                        <span class="step-icon">4</span>
+                        <p class="step-text"><strong class="step-title-text">Claim Reward:</strong> If eligible, get card details!</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="mt-3 mb-2 animate-fadeIn delay-4">
+                <button id="ctaButton" class="cta-button font-semibold py-3 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                    <i class="fas fa-arrow-right mr-1.5"></i> Get Started Now
+                </button>
+                <p id="ctaMessage" class="mt-1.5 text-xs text-center text-green-600 font-medium hidden">
+                    <i class="fas fa-spinner fa-spin mr-1"></i> Checking eligibility...
+                </p>
+            </section>
+            
+            <!-- Social Proof Section -->
+            <section class="mt-4 mb-3 animate-fadeIn delay-4">
+                <div class="bg-gray-50 rounded-lg px-3 py-3">
+                    <h3 class="font-semibold text-gray-700 text-sm mb-2 flex items-center justify-center">
+                        <i class="fas fa-star mr-1 text-yellow-400"></i> PEOPLE ARE LOVING THIS
+                    </h3>
+                    
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white rounded-lg p-3 mb-2 border border-gray-100 shadow-sm">
+                        <div class="flex items-center mb-1">
+                            <div class="w-7 h-7 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold mr-2">JL</div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Jessie Lin</p>
+                                <div class="flex items-center">
+                                    <i class="fab fa-tiktok text-xs mr-1"></i>
+                                    <p class="text-xs text-gray-500">@shopwith.jessie</p>
+                                </div>
+                            </div>
+                            <div class="ml-auto flex">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-left text-gray-700">I was skeptical at first, but I actually got my gift card after completing the offers! Bought a new air fryer and still have $ left 🙌</p>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white rounded-lg p-3 mb-2 border border-gray-100 shadow-sm">
+                        <div class="flex items-center mb-1">
+                            <div class="w-7 h-7 bg-gradient-to-br from-blue-400 to-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold mr-2">KT</div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-800">Kyle Thompson</p>
+                                <div class="flex items-center">
+                                    <i class="fab fa-tiktok text-xs mr-1"></i>
+                                    <p class="text-xs text-gray-500">@kyledeals</p>
+                                </div>
+                            </div>
+                            <div class="ml-auto flex">
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-left text-gray-700">This actually worked! Took about a week to process but the card came through. Used it for groceries during inflation - huge help.</p>
+                    </div>
+                    
+                    <!-- Social Proof Counter -->
+                    <div class="flex justify-center items-center mt-2">
+                        <div class="px-2 py-1 bg-gray-100 rounded-full flex items-center">
+                            <div class="flex -space-x-1 mr-1.5">
+                                <div class="w-5 h-5 rounded-full bg-gradient-to-r from-pink-500 to-orange-500 border border-white"></div>
+                                <div class="w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 border border-white"></div>
+                                <div class="w-5 h-5 rounded-full bg-gradient-to-r from-green-500 to-blue-500 border border-white"></div>
+                            </div>
+                            <span class="text-xs font-medium text-gray-600">5.7k people claimed this month</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="mt-3 text-center animate-fadeIn delay-4 footer-text">
+                <p class="mb-0.5">Terms apply. Participation & offer completion required.</p>
+                <p>&copy; <span id="currentYear"></span> | <a href="#" class="hover:underline">Privacy</a> | <a href="#" class="hover:underline">Terms</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- Dynamic Link Configuration ---
+        const baseOfferUrl = 'https://glstrck.com/aff_c';
+        const offerId = '564';
+        const affiliateId = '1359';
+        let dynamicSource = '123'; // Default source value
+
+        // --- Check Referrer and Update Source ---
+        try {
+            const referrer = document.referrer;
+            if (referrer) {
+                const referrerUrl = new URL(referrer);
+                
+                // Get all path parts (everything after the domain)
+                const pathParts = referrerUrl.pathname.split('/').filter(part => part.length > 0);
+                
+                // If there's at least one path part
+                if (pathParts.length > 0) {
+                    const lastPathPart = pathParts[pathParts.length - 1];
+                    
+                    // Extract only the first 4 letters from the path
+                    if (lastPathPart.length > 0) {
+                        // Take up to 4 characters, but if there are fewer, take what's available
+                        dynamicSource = lastPathPart.substring(0, 4);
+                        console.log("Detected first 4 letters of path:", dynamicSource);
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn("Could not parse referrer URL:", error);
         }
-      } catch (err) {}
 
-      const finalOfferLink = `${baseOfferUrl}?offer_id=${offerId}&aff_id=${affiliateId}&source=${dynamicSource}`;
+        // Create the final offer link with the dynamic source
+        const finalOfferLink = ${baseOfferUrl}?offer_id=${offerId}&aff_id=${affiliateId}&source=${dynamicSource};
+        console.log("Final offer link:", finalOfferLink);
 
-      ctaBtn.onclick = function () {
-        ctaBtn.disabled = true;
-        ctaBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        ctaMsg.style.display = 'block';
-        setTimeout(() => {
-          window.location.href = finalOfferLink;
-        }, 500);
-      };
-    };
-  </script>
+        // --- Page Elements ---
+        const ctaBtn = document.getElementById('ctaButton');
+        const ctaMsg = document.getElementById('ctaMessage');
+        const currentYearSpan = document.getElementById('currentYear');
+
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+
+        // --- CTA Button Event Listener ---
+        if (ctaBtn) {
+            ctaBtn.addEventListener('click', () => {
+                ctaBtn.disabled = true;
+                ctaBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1.5"></i> Processing...';
+                if (ctaMsg) {
+                    ctaMsg.classList.remove('hidden');
+                }
+                setTimeout(() => {
+                    window.location.href = finalOfferLink;
+                }, 500);
+            });
+        }
+    </script>
+
 </body>
 </html>
