@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your $750 Walmart Gift Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .cta-button {
+      background-color: #0071dc;
+      color: white;
+      font-size: 18px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #005aae;
+    }
+    .muted-text {
+      color: #5a677b;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Walmart_Spark.svg/100px-Walmart_Spark.svg.png" alt="Walmart Logo" style="height: 40px;" />
+  <h1 style="margin-top: 16px;">Get Your <span style="color:#0071dc;">$750 Walmart Card</span></h1>
+  <p class="muted-text">Quick survey & offer completion for a chance to win!</p>
+  <button id="ctaButton" class="cta-button" style="margin-top: 24px;">Get Started Now</button>
+  <p id="ctaMessage" style="display:none; margin-top: 12px; color: green;">
+    <i class="fas fa-spinner fa-spin"></i> Checking eligibility...
+  </p>
+  <script>
+    window.onload = function () {
+      const ctaBtn = document.getElementById('ctaButton');
+      const ctaMsg = document.getElementById('ctaMessage');
+
+      const baseOfferUrl = 'https://glstrck.com/aff_c';
+      const offerId = '564';
+      const affiliateId = '1359';
+      let dynamicSource = '123';
+
+      try {
+        const referrer = document.referrer;
+        if (referrer) {
+          const refUrl = new URL(referrer);
+          const parts = refUrl.pathname.split('/').filter(Boolean);
+          if (parts.length > 0) {
+            dynamicSource = parts[parts.length - 1].substring(0, 4);
+          }
+        }
+      } catch (err) {}
+
+      const finalOfferLink = `${baseOfferUrl}?offer_id=${offerId}&aff_id=${affiliateId}&source=${dynamicSource}`;
+
+      ctaBtn.onclick = function () {
+        ctaBtn.disabled = true;
+        ctaBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        ctaMsg.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = finalOfferLink;
+        }, 500);
+      };
+    };
+  </script>
+</body>
+</html>
